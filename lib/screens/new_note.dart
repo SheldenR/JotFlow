@@ -29,11 +29,17 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
 
   String timeParse(int hour, int minute) {
     String amPM = "AM";
+    String minuteString = "";
     if (hour > 12) {
       hour -= 12;
       amPM = "PM";
     }
-    return "$hour:$minute$amPM";
+    if (minute < 10) {
+      minuteString = "0$minute";
+    } else {
+      minuteString = minute.toString();
+    }
+    return "$hour:$minuteString$amPM";
   }
 
   late String noteCreationDate =
@@ -108,6 +114,7 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
                     decoration: InputDecoration(
                         hintText: "Enter your notes here...",
                         border: InputBorder.none,
+                        contentPadding: EdgeInsets.only(top: 20, bottom: 150),
                         hintStyle: TextStyle(
                           fontFamily: "Poppins",
                           fontWeight: FontWeight.w400,

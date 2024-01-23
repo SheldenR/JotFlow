@@ -96,7 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           });
                         },
                         style: TextButton.styleFrom(
-                            foregroundColor: const Color(0xFF303030),
+                            foregroundColor: Colors.white,
                             backgroundColor: selectedButton == 1
                                 ? const Color(0xFFFFE054)
                                 : const Color(0x00000000),
@@ -124,7 +124,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           });
                         },
                         style: TextButton.styleFrom(
-                            foregroundColor: const Color(0xFF303030),
+                            foregroundColor: Colors.white,
                             backgroundColor: selectedButton == 2
                                 ? const Color(0xFFFFE054)
                                 : const Color(0x00000000),
@@ -152,7 +152,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           });
                         },
                         style: TextButton.styleFrom(
-                            foregroundColor: const Color(0xFF303030),
+                            foregroundColor: Colors.white,
                             backgroundColor: selectedButton == 3
                                 ? const Color(0xFFFFE054)
                                 : const Color(0x00000000),
