@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:jotflow/screens/new_note.dart';
 import '../util/note_card.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -30,6 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
         toolbarHeight: 70,
         scrolledUnderElevation: 0,
@@ -183,9 +185,16 @@ class _HomeScreenState extends State<HomeScreen> {
             ))
           ])),
       floatingActionButton: FloatingActionButton(
+        shape: const CircleBorder(),
         backgroundColor: const Color(0xFF303030),
         splashColor: const Color(0xFF303030),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const NewNoteScreen(),
+              ));
+        },
         child: const Icon(Icons.add, color: Colors.white, size: 28),
       ),
       bottomNavigationBar: NavigationBar(
