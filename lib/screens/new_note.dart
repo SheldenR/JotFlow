@@ -35,7 +35,7 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
       amPM = "PM";
     }
     if (minute < 10) {
-      minuteString = "0$minute";
+      minuteString = "0$minute.toString()";
     } else {
       minuteString = minute.toString();
     }
@@ -74,34 +74,39 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
           ]),
       body: Padding(
           padding: const EdgeInsets.only(left: 18, right: 18),
-          child: ListView(children: [
-            const TextField(
-              style: TextStyle(
-                fontFamily: "Poppins",
-                fontWeight: FontWeight.w700,
-                fontSize: 30,
-                color: Color(0xFF303030),
-              ),
-              decoration: InputDecoration(
-                  border: InputBorder.none,
-                  contentPadding: EdgeInsets.only(bottom: -5),
-                  hintText: "Title",
-                  hintStyle: TextStyle(
+          child: SingleChildScrollView(
+              child: Expanded(
+                  child: Column(
+                      //padding: const EdgeInsets.only(left: 18, right: 18),
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                const TextField(
+                  style: TextStyle(
                     fontFamily: "Poppins",
                     fontWeight: FontWeight.w700,
                     fontSize: 30,
-                    color: Color.fromARGB(83, 48, 48, 48),
-                  )),
-            ),
-            Text(noteCreationDate,
-                style: const TextStyle(
-                  fontFamily: "Poppins",
-                  fontWeight: FontWeight.w300,
-                  fontSize: 16,
-                  color: Color(0xFF303030),
-                )),
-            const Expanded(
-                child: TextField(
+                    color: Color(0xFF303030),
+                  ),
+                  decoration: InputDecoration(
+                      border: InputBorder.none,
+                      contentPadding: EdgeInsets.only(bottom: -5),
+                      hintText: "Title",
+                      hintStyle: TextStyle(
+                        fontFamily: "Poppins",
+                        fontWeight: FontWeight.w700,
+                        fontSize: 30,
+                        color: Color.fromARGB(83, 48, 48, 48),
+                      )),
+                ),
+                Text(noteCreationDate,
+                    style: const TextStyle(
+                      fontFamily: "Poppins",
+                      fontWeight: FontWeight.w300,
+                      fontSize: 16,
+                      color: Color(0xFF303030),
+                    )),
+                const TextField(
                     keyboardType: TextInputType.multiline,
                     maxLines: null,
                     style: TextStyle(
@@ -121,18 +126,14 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
                           fontSize: 21,
                           color: Color.fromARGB(85, 48, 48, 48),
                           height: 1.5,
-                        ))))
-          ])),
+                        ))),
+              ])))),
       floatingActionButton: FloatingActionButton(
         shape: const CircleBorder(),
         backgroundColor: const Color(0xFF303030),
         splashColor: const Color(0xFF303030),
         onPressed: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const HomeScreen(),
-              ));
+          FocusScope.of(context).unfocus();
         },
         child: const Icon(Icons.check, color: Colors.white, size: 28),
       ),
