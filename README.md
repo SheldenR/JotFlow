@@ -1,3 +1,3 @@
-# jotflow
+# JotFlow
 
-A new Flutter project.
+A simple and easy to use notetaking app for your mobile device.
