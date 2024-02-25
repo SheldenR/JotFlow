@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:jotflow/main.dart';
+import '../models/notes_model.dart';
 import 'home_screen.dart';
 
 class NewNoteScreen extends StatefulWidget {
@@ -35,7 +37,7 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
       amPM = "PM";
     }
     if (minute < 10) {
-      minuteString = "0$minute.toString()";
+      minuteString = "0${minute.toString()}";
     } else {
       minuteString = minute.toString();
     }
@@ -44,6 +46,7 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
 
   late String noteCreationDate =
       "${(DateTime.now().day).toString()} ${monthParse(DateTime.now().month)} ${(DateTime.now().year).toString()}, ${timeParse(DateTime.now().hour, DateTime.now().minute)}";
+
   bool isPinned = false;
 
   @override
@@ -134,6 +137,13 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
         splashColor: const Color(0xFF303030),
         onPressed: () {
           FocusScope.of(context).unfocus();
+          notes.put(
+              notes.length,
+              NotesModel(
+                  title: "Test title",
+                  description: "Description",
+                  creationTime: "Now",
+                  isPinned: false));
         },
         child: const Icon(Icons.check, color: Colors.white, size: 28),
       ),

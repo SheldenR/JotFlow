@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:jotflow/screens/new_note.dart';
+import 'package:jotflow/main.dart';
 import '../util/note_card.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -104,7 +105,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 borderRadius: BorderRadius.circular(30.0)),
                             side: const BorderSide(
                                 color: Color(0xFFFFE054), width: 2)),
-                        child: Text("All (0)",
+                        child: Text("All (${notes.length})",
                             style: TextStyle(
                               fontFamily: "Poppins",
                               fontWeight: selectedButton == 1
@@ -132,38 +133,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                 borderRadius: BorderRadius.circular(30.0)),
                             side: const BorderSide(
                                 color: Color(0xFFFFE054), width: 2)),
-                        child: Text("Notes",
+                        child: Text("Pinned",
                             style: TextStyle(
                               fontFamily: "Poppins",
                               fontWeight: selectedButton == 2
-                                  ? FontWeight.w600
-                                  : FontWeight.w400,
-                              fontSize: 14.4,
-                              color: const Color(0xFF303030),
-                            )),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 10),
-                      child: TextButton(
-                        onPressed: () {
-                          setState(() {
-                            selectedButton = 3;
-                          });
-                        },
-                        style: TextButton.styleFrom(
-                            foregroundColor: Colors.white,
-                            backgroundColor: selectedButton == 3
-                                ? const Color(0xFFFFE054)
-                                : const Color(0x00000000),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30.0)),
-                            side: const BorderSide(
-                                color: Color(0xFFFFE054), width: 2)),
-                        child: Text("Groups",
-                            style: TextStyle(
-                              fontFamily: "Poppins",
-                              fontWeight: selectedButton == 3
                                   ? FontWeight.w600
                                   : FontWeight.w400,
                               fontSize: 14.4,
@@ -175,7 +148,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 )),
             Expanded(
                 child: MasonryGridView.builder(
-              itemCount: 5,
+              itemCount: notes.length,
               mainAxisSpacing: 12,
               crossAxisSpacing: 12,
               gridDelegate:

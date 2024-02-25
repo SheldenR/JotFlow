@@ -1,10 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'models/notes_model.dart';
 import 'screens/home_screen.dart';
 
-void main() {
+late Box notes;
+Future<void> main() async {
+  // Hive Database
+  await Hive.initFlutter();
+  Hive.registerAdapter(NotesModelAdapter());
+  notes = await Hive.openBox('notes');
+
+  // Run application
   runApp(const MyApp());
 
+  // System Settings
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle(
