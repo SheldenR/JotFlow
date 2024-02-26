@@ -11,6 +11,10 @@ class NewNoteScreen extends StatefulWidget {
 }
 
 class _NewNoteScreenState extends State<NewNoteScreen> {
+  bool isPinned = false;
+  late String title = "";
+  late String description = "";
+
   String monthParse(int month) {
     var monthList = [
       "Jan",
@@ -47,7 +51,13 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
   late String noteCreationDate =
       "${(DateTime.now().day).toString()} ${monthParse(DateTime.now().month)} ${(DateTime.now().year).toString()}, ${timeParse(DateTime.now().hour, DateTime.now().minute)}";
 
-  bool isPinned = false;
+  int findNextID() {
+    if (notes.length == 0) {
+      return 0;
+    } else {
+      return notes.keys.last + 1;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,14 +94,15 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                const TextField(
-                  style: TextStyle(
+                TextField(
+                  style: const TextStyle(
                     fontFamily: "Poppins",
                     fontWeight: FontWeight.w700,
                     fontSize: 30,
                     color: Color(0xFF303030),
                   ),
-                  decoration: InputDecoration(
+                  onChanged: (value) => title = value,
+                  decoration: const InputDecoration(
                       border: InputBorder.none,
                       contentPadding: EdgeInsets.only(bottom: -5),
                       hintText: "Title",
@@ -109,17 +120,18 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
                       fontSize: 16,
                       color: Color(0xFF303030),
                     )),
-                const TextField(
+                TextField(
                     keyboardType: TextInputType.multiline,
                     maxLines: null,
-                    style: TextStyle(
+                    onChanged: (value) => description = value,
+                    style: const TextStyle(
                       fontFamily: "Poppins",
                       fontWeight: FontWeight.w400,
                       fontSize: 21,
                       color: Color.fromARGB(255, 48, 48, 48),
                       height: 1.5,
                     ),
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                         hintText: "Enter your notes here...",
                         border: InputBorder.none,
                         contentPadding: EdgeInsets.only(top: 20, bottom: 150),
@@ -138,11 +150,11 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
         onPressed: () {
           FocusScope.of(context).unfocus();
           notes.put(
-              notes.length,
+              findNextID(), // ID
               NotesModel(
-                  title: "Test title",
-                  description: "Description",
-                  creationTime: "Now",
+                  title: title,
+                  description: description,
+                  creationTime: noteCreationDate,
                   isPinned: false));
         },
         child: const Icon(Icons.check, color: Colors.white, size: 28),

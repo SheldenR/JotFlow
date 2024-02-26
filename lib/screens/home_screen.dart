@@ -154,7 +154,7 @@ class _HomeScreenState extends State<HomeScreen> {
               gridDelegate:
                   const SliverSimpleGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2),
-              itemBuilder: (context, index) => const NoteCard(),
+              itemBuilder: (context, index) => NoteCard(noteID: index),
             ))
           ])),
       floatingActionButton: FloatingActionButton(

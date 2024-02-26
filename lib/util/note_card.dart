@@ -3,7 +3,8 @@ import 'package:jotflow/main.dart';
 import 'pinned.dart';
 
 class NoteCard extends StatefulWidget {
-  const NoteCard({super.key});
+  final int noteID;
+  const NoteCard({super.key, required this.noteID});
 
   @override
   State<NoteCard> createState() => _NoteCardState();
@@ -26,16 +27,16 @@ class _NoteCardState extends State<NoteCard> {
             Padding(
                 padding: const EdgeInsets.only(
                     top: 16, left: 16, right: 16, bottom: 8),
-                child: Text(notes.keys.toString(),
+                child: Text(notes.get(widget.noteID).title,
                     style: const TextStyle(
                         fontFamily: "Poppins",
                         fontWeight: FontWeight.w600,
                         fontSize: 17,
                         color: Color(0xB2303030)))),
-            const Padding(
-                padding: EdgeInsets.only(left: 16, right: 16),
-                child: Text("Description",
-                    style: TextStyle(
+            Padding(
+                padding: const EdgeInsets.only(left: 16, right: 16),
+                child: Text(notes.get(widget.noteID).description,
+                    style: const TextStyle(
                         fontFamily: "Poppins",
                         fontSize: 14.5,
                         color: Color(0x99303030)))),
