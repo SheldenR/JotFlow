@@ -182,9 +182,9 @@ class _HomeScreenState extends State<HomeScreen> {
               icon: Icon(Icons.search, color: Color(0xFF303030)),
               label: "Search"),
           NavigationDestination(
-              selectedIcon: Icon(Icons.push_pin, color: Color(0xFF303030)),
-              icon: Icon(Icons.push_pin_outlined, color: Color(0xFF303030)),
-              label: "Pinned"),
+              selectedIcon: Icon(Icons.settings, color: Color(0xFF303030)),
+              icon: Icon(Icons.settings_outlined, color: Color(0xFF303030)),
+              label: "Settings"),
         ],
         onDestinationSelected: (int index) {
           setState(() {
