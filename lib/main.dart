@@ -10,7 +10,7 @@ Future<void> main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(NotesModelAdapter());
   notes = await Hive.openBox('notes');
-  notes.clear(); // Remove on launch
+  notes.clear(); // Remove on final release
 
   // Run application
   runApp(const MyApp());

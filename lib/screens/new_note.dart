@@ -4,7 +4,8 @@ import '../models/notes_model.dart';
 import 'home_screen.dart';
 
 class NewNoteScreen extends StatefulWidget {
-  const NewNoteScreen({super.key});
+  final int noteID;
+  const NewNoteScreen({super.key, required this.noteID});
 
   @override
   State<NewNoteScreen> createState() => _NewNoteScreenState();
@@ -51,14 +52,6 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
   late String noteCreationDate =
       "${(DateTime.now().day).toString()} ${monthParse(DateTime.now().month)} ${(DateTime.now().year).toString()}, ${timeParse(DateTime.now().hour, DateTime.now().minute)}";
 
-  int findNextID() {
-    if (notes.length == 0) {
-      return 0;
-    } else {
-      return notes.keys.last + 1;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -101,7 +94,28 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
                     fontSize: 30,
                     color: Color(0xFF303030),
                   ),
-                  onChanged: (value) => title = value,
+                  onChanged: (String value) async {
+                    if (notes.get(widget.noteID) == null) {
+                      // Key doesnt exist
+                      notes.put(
+                          widget.noteID, // ID
+                          NotesModel(
+                              title: value,
+                              description: "No note contents",
+                              creationTime: noteCreationDate,
+                              isPinned: false));
+                    } else {
+                      // If key already exists
+                      notes.put(
+                          widget.noteID, // ID
+                          NotesModel(
+                              title: value,
+                              description: notes.get(widget.noteID).description,
+                              creationTime:
+                                  notes.get(widget.noteID).creationTime,
+                              isPinned: notes.get(widget.noteID).isPinned));
+                    }
+                  },
                   decoration: const InputDecoration(
                       border: InputBorder.none,
                       contentPadding: EdgeInsets.only(bottom: -5),
@@ -123,7 +137,28 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
                 TextField(
                     keyboardType: TextInputType.multiline,
                     maxLines: null,
-                    onChanged: (value) => description = value,
+                    onChanged: (String value) async {
+                      if (notes.get(widget.noteID) == null) {
+                        // Key doesnt exist
+                        notes.put(
+                            widget.noteID, // ID
+                            NotesModel(
+                                title: "No Title",
+                                description: value,
+                                creationTime: noteCreationDate,
+                                isPinned: false));
+                      } else {
+                        // If key already exists
+                        notes.put(
+                            widget.noteID, // ID
+                            NotesModel(
+                                title: notes.get(widget.noteID).title,
+                                description: value,
+                                creationTime:
+                                    notes.get(widget.noteID).creationTime,
+                                isPinned: notes.get(widget.noteID).isPinned));
+                      }
+                    },
                     style: const TextStyle(
                       fontFamily: "Poppins",
                       fontWeight: FontWeight.w400,
@@ -132,7 +167,7 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
                       height: 1.5,
                     ),
                     decoration: const InputDecoration(
-                        hintText: "Enter your notes here...",
+                        hintText: "Enter your note contents here...",
                         border: InputBorder.none,
                         contentPadding: EdgeInsets.only(top: 20, bottom: 150),
                         hintStyle: TextStyle(
@@ -143,22 +178,6 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
                           height: 1.5,
                         ))),
               ])))),
-      floatingActionButton: FloatingActionButton(
-        shape: const CircleBorder(),
-        backgroundColor: const Color(0xFF303030),
-        splashColor: const Color(0xFF303030),
-        onPressed: () {
-          FocusScope.of(context).unfocus();
-          notes.put(
-              findNextID(), // ID
-              NotesModel(
-                  title: title,
-                  description: description,
-                  creationTime: noteCreationDate,
-                  isPinned: false));
-        },
-        child: const Icon(Icons.check, color: Colors.white, size: 28),
-      ),
     );
   }
 }

@@ -28,6 +28,14 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  int findNextID() {
+    if (notes.length == 0) {
+      return 0;
+    } else {
+      return notes.keys.last + 1;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -165,7 +173,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const NewNoteScreen(),
+                builder: (context) => NewNoteScreen(noteID: findNextID()),
               ));
         },
         child: const Icon(Icons.add, color: Colors.white, size: 28),
