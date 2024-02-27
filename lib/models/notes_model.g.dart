@@ -20,7 +20,7 @@ class NotesModelAdapter extends TypeAdapter<NotesModel> {
       title: fields[0] as String,
       description: fields[1] as String,
       creationTime: fields[2] as String,
-      isPinned: fields[4] as bool,
+      isPinned: fields[3] as bool,
     );
   }
 
@@ -34,7 +34,7 @@ class NotesModelAdapter extends TypeAdapter<NotesModel> {
       ..write(obj.description)
       ..writeByte(2)
       ..write(obj.creationTime)
-      ..writeByte(4)
+      ..writeByte(3)
       ..write(obj.isPinned);
   }
 

@@ -12,7 +12,7 @@ class NewNoteScreen extends StatefulWidget {
 }
 
 class _NewNoteScreenState extends State<NewNoteScreen> {
-  bool isPinned = false;
+  bool pinned = false;
   late String title = "";
   late String description = "";
 
@@ -70,10 +70,29 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
             IconButton(
               onPressed: () {
                 setState(() {
-                  isPinned = !isPinned;
+                  pinned = !pinned;
+                  if (notes.get(widget.noteID) == null) {
+                    // Key doesnt exist
+                    notes.put(
+                        widget.noteID, // ID
+                        NotesModel(
+                            title: "No Title",
+                            description: "No note contents",
+                            creationTime: noteCreationDate,
+                            isPinned: pinned));
+                  } else {
+                    // If key already exists
+                    notes.put(
+                        widget.noteID, // ID
+                        NotesModel(
+                            title: notes.get(widget.noteID).title,
+                            description: notes.get(widget.noteID).description,
+                            creationTime: notes.get(widget.noteID).creationTime,
+                            isPinned: pinned));
+                  }
                 });
               },
-              icon: isPinned == true
+              icon: pinned == true
                   ? const Icon(Icons.push_pin)
                   : const Icon(Icons.push_pin_outlined),
             )
@@ -83,7 +102,6 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
           child: SingleChildScrollView(
               child: Expanded(
                   child: Column(
-                      //padding: const EdgeInsets.only(left: 18, right: 18),
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -103,7 +121,7 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
                               title: value,
                               description: "No note contents",
                               creationTime: noteCreationDate,
-                              isPinned: false));
+                              isPinned: pinned));
                     } else {
                       // If key already exists
                       notes.put(
@@ -146,7 +164,7 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
                                 title: "No Title",
                                 description: value,
                                 creationTime: noteCreationDate,
-                                isPinned: false));
+                                isPinned: pinned));
                       } else {
                         // If key already exists
                         notes.put(
@@ -167,7 +185,7 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
                       height: 1.5,
                     ),
                     decoration: const InputDecoration(
-                        hintText: "Enter your note contents here...",
+                        hintText: "Enter note contents...",
                         border: InputBorder.none,
                         contentPadding: EdgeInsets.only(top: 20, bottom: 150),
                         hintStyle: TextStyle(

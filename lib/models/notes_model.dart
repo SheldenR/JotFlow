@@ -20,6 +20,11 @@ class NotesModel {
   @HiveField(2)
   String creationTime;
 
-  @HiveField(4)
+  @HiveField(3)
   bool isPinned;
+
+  /*
+  @HiveField(4)
+  int color; // 0: default, 1: yellow, 2: blue, 3: orange, 4: green
+  */
 }
