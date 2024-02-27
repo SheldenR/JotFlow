@@ -169,7 +169,28 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
               ))
             else
-              const Expanded(child: Text("no notes"))
+              const Padding(
+                  padding: EdgeInsets.only(left: 50, right: 50),
+                  child: Column(
+                    children: [
+                      Padding(
+                          padding: EdgeInsets.only(top: 80, bottom: 25),
+                          child: Image(
+                            image: AssetImage('assets/no_notes.png'),
+                            width: 150,
+                          )),
+                      Text(
+                        "It seems you don’t currently have any notes. Add to your JotFlow by creating a note using the \"+\" button below.",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontFamily: "Poppins",
+                          fontWeight: FontWeight.w400,
+                          color: Color(0x7F303030),
+                        ),
+                        textAlign: TextAlign.center,
+                      )
+                    ],
+                  ))
           ])),
       floatingActionButton: FloatingActionButton(
         shape: const CircleBorder(),
