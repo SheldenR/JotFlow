@@ -154,19 +154,22 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ],
                 )),
-            Expanded(
-                child: MasonryGridView.builder(
-              itemCount: notes.length,
-              mainAxisSpacing: 12,
-              crossAxisSpacing: 12,
-              gridDelegate:
-                  const SliverSimpleGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2),
-              itemBuilder: (context, index) {
-                // Implement sorting by pinned first here
-                return NoteCard(noteID: index);
-              },
-            ))
+            if (notes.length > 0)
+              Expanded(
+                  child: MasonryGridView.builder(
+                itemCount: notes.length,
+                mainAxisSpacing: 12,
+                crossAxisSpacing: 12,
+                gridDelegate:
+                    const SliverSimpleGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2),
+                itemBuilder: (context, index) {
+                  // Implement sorting by pinned first here
+                  return NoteCard(noteID: index);
+                },
+              ))
+            else
+              const Expanded(child: Text("no notes"))
           ])),
       floatingActionButton: FloatingActionButton(
         shape: const CircleBorder(),
@@ -181,7 +184,7 @@ class _HomeScreenState extends State<HomeScreen> {
         },
         child: const Icon(Icons.add, color: Colors.white, size: 28),
       ),
-      bottomNavigationBar: NavigationBar(
+      /*bottomNavigationBar: NavigationBar(
         surfaceTintColor: const Color.fromARGB(0, 255, 255, 255),
         indicatorColor: const Color.fromARGB(255, 238, 238, 238),
         destinations: const [
@@ -203,7 +206,7 @@ class _HomeScreenState extends State<HomeScreen> {
           });
         },
         selectedIndex: currentPageIndex,
-      ),
+      ),*/
     );
   }
 }

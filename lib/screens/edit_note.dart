@@ -31,6 +31,32 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
               icon: const Icon(Icons.arrow_back)),
           actions: [
             IconButton(
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                          title: const Text("Delete Note"),
+                          content: const Text(
+                              "Are you sure you want to permanently delete this note?"),
+                          actions: [
+                            TextButton(
+                                child: const Text("Delete Note"),
+                                onPressed: () {
+                                  notes.delete(widget.noteID);
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const HomeScreen()),
+                                  );
+                                })
+                          ]);
+                    },
+                  );
+                },
+                icon: const Icon(Icons.delete_outlined)),
+            IconButton(
               onPressed: () {
                 setState(() {
                   notes.put(
