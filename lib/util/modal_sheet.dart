@@ -206,11 +206,27 @@ class _NoteModalSheetState extends State<NoteModalSheet> {
                             color: Color(0xFF303030),
                           )),
                       onPressed: () {
-                        notes.delete(widget.noteID);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const HomeScreen()),
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                                title: const Text("Delete Note"),
+                                content: const Text(
+                                    "Are you sure you want to permanently delete this note?"),
+                                actions: [
+                                  TextButton(
+                                      child: const Text("Delete Note"),
+                                      onPressed: () {
+                                        notes.delete(widget.noteID);
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const HomeScreen()),
+                                        );
+                                      })
+                                ]);
+                          },
                         );
                       })
                 ]),
