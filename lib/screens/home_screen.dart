@@ -13,27 +13,58 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   var currentTime = (DateTime.parse((DateTime.now()).toString())).hour;
+  bool showAllNotes = true;
   int currentPageIndex = 0;
   int selectedButton = 1;
 
   String getGreeting() {
     if (currentTime < 5) {
-      return "Sweet dreams, Shelden";
+      return "Sweet dreams...";
     } else if (currentTime >= 5 && currentTime < 12) {
-      return "Good Morning, Shelden";
+      return "Good Morning...";
     } else if (currentTime >= 12 && currentTime < 17) {
-      return "Good Afternoon, Shelden";
+      return "Good Afternoon...";
     } else {
-      return "Good Night, Shelden";
+      return "Good Night...";
     }
   }
 
-  int findNextID() {
+  int nextID(int index) {
+    List<int> availableIDs = [];
+    List<int> availableUnpinnedIDs = [];
+    List<int> availablePinnedIDs = [];
+    for (int i = 0; i < notes.length; i++) {
+      availableIDs.add(notes.keys.elementAt(i));
+    }
+    for (int i = 0; i < availableIDs.length; i++) {
+      if (notes.get(availableIDs[i]).isPinned == true) {
+        availablePinnedIDs.add(notes.keys.elementAt(i));
+      } else {
+        availableUnpinnedIDs.add(notes.keys.elementAt(i));
+      }
+    }
+
+    return (availablePinnedIDs.reversed.toList() +
+        availableUnpinnedIDs.reversed.toList())[index];
+  }
+
+  int createID() {
     if (notes.length == 0) {
       return 0;
     } else {
       return notes.keys.last + 1;
     }
+  }
+
+  int numOfPinned() {
+    int count = 0;
+    for (int i = 0; i < notes.length; i++) {
+      if (notes.getAt(i).isPinned == true) {
+        count++;
+      }
+    }
+
+    return count;
   }
 
   @override
@@ -71,17 +102,6 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               IconButton(
                 onPressed: () {},
-                icon: const Icon(Icons.sort),
-              ),
-              const Text("")
-            ],
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              IconButton(
-                onPressed: () {},
                 icon: const Icon(Icons.more_vert),
               ),
               const Text("")
@@ -101,6 +121,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: TextButton(
                         onPressed: () {
                           setState(() {
+                            showAllNotes = true;
                             selectedButton = 1;
                           });
                         },
@@ -129,6 +150,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: TextButton(
                         onPressed: () {
                           setState(() {
+                            showAllNotes = false;
                             selectedButton = 2;
                           });
                         },
@@ -154,7 +176,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ],
                 )),
-            if (notes.length > 0)
+            if (notes.length > 0 && showAllNotes)
               Expanded(
                   child: MasonryGridView.builder(
                 itemCount: notes.length,
@@ -165,10 +187,24 @@ class _HomeScreenState extends State<HomeScreen> {
                         crossAxisCount: 2),
                 itemBuilder: (context, index) {
                   // Implement sorting by pinned first here
-                  return NoteCard(noteID: index);
+                  return NoteCard(noteID: nextID(index));
                 },
               ))
-            else
+            else if (notes.length > 0 && !showAllNotes)
+              Expanded(
+                  child: MasonryGridView.builder(
+                itemCount: numOfPinned(),
+                mainAxisSpacing: 12,
+                crossAxisSpacing: 12,
+                gridDelegate:
+                    const SliverSimpleGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2),
+                itemBuilder: (context, index) {
+                  // Implement sorting by pinned first here
+                  return NoteCard(noteID: nextID(index));
+                },
+              ))
+            else if (notes.length == 0)
               const Padding(
                   padding: EdgeInsets.only(left: 50, right: 50),
                   child: Column(
@@ -180,7 +216,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             width: 150,
                           )),
                       Text(
-                        "It seems you don’t currently have any notes. Add to your JotFlow by creating a note using the \"+\" button below.",
+                        "It seems you don’t currently have any notes. Add to your JotFlow by creating a note using the plus button below.",
                         style: TextStyle(
                           fontSize: 20,
                           fontFamily: "Poppins",
@@ -194,40 +230,17 @@ class _HomeScreenState extends State<HomeScreen> {
           ])),
       floatingActionButton: FloatingActionButton(
         shape: const CircleBorder(),
-        backgroundColor: const Color(0xFF303030),
-        splashColor: const Color(0xFF303030),
+        backgroundColor: const Color(0xFFFFE054),
+        splashColor: const Color(0xFFFFE054),
         onPressed: () {
           Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => NewNoteScreen(noteID: findNextID()),
+                builder: (context) => NewNoteScreen(noteID: createID()),
               ));
         },
-        child: const Icon(Icons.add, color: Colors.white, size: 28),
+        child: const Icon(Icons.add, color: Color(0xFF303030), size: 28),
       ),
-      /*bottomNavigationBar: NavigationBar(
-        surfaceTintColor: const Color.fromARGB(0, 255, 255, 255),
-        indicatorColor: const Color.fromARGB(255, 238, 238, 238),
-        destinations: const [
-          NavigationDestination(
-              selectedIcon: Icon(Icons.home, color: Color(0xFF303030)),
-              icon: Icon(Icons.home_outlined, color: Color(0xFF303030)),
-              label: "Home"),
-          NavigationDestination(
-              icon: Icon(Icons.search, color: Color(0xFF303030)),
-              label: "Search"),
-          NavigationDestination(
-              selectedIcon: Icon(Icons.settings, color: Color(0xFF303030)),
-              icon: Icon(Icons.settings_outlined, color: Color(0xFF303030)),
-              label: "Settings"),
-        ],
-        onDestinationSelected: (int index) {
-          setState(() {
-            currentPageIndex = index;
-          });
-        },
-        selectedIndex: currentPageIndex,
-      ),*/
     );
   }
 }

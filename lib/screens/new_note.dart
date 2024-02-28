@@ -79,7 +79,8 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
                             title: "No Title",
                             description: "No note contents",
                             creationTime: noteCreationDate,
-                            isPinned: pinned));
+                            isPinned: pinned,
+                            color: 0));
                   } else {
                     // If key already exists
                     notes.put(
@@ -88,7 +89,8 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
                             title: notes.get(widget.noteID).title,
                             description: notes.get(widget.noteID).description,
                             creationTime: notes.get(widget.noteID).creationTime,
-                            isPinned: pinned));
+                            isPinned: pinned,
+                            color: notes.get(widget.noteID).color));
                   }
                 });
               },
@@ -121,7 +123,8 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
                               title: value,
                               description: "No note contents",
                               creationTime: noteCreationDate,
-                              isPinned: pinned));
+                              isPinned: pinned,
+                              color: 0));
                     } else {
                       // If key already exists
                       notes.put(
@@ -131,7 +134,8 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
                               description: notes.get(widget.noteID).description,
                               creationTime:
                                   notes.get(widget.noteID).creationTime,
-                              isPinned: notes.get(widget.noteID).isPinned));
+                              isPinned: notes.get(widget.noteID).isPinned,
+                              color: notes.get(widget.noteID).color));
                     }
                   },
                   decoration: const InputDecoration(
@@ -164,7 +168,8 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
                                 title: "No Title",
                                 description: value,
                                 creationTime: noteCreationDate,
-                                isPinned: pinned));
+                                isPinned: pinned,
+                                color: 0));
                       } else {
                         // If key already exists
                         notes.put(
@@ -174,7 +179,8 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
                                 description: value,
                                 creationTime:
                                     notes.get(widget.noteID).creationTime,
-                                isPinned: notes.get(widget.noteID).isPinned));
+                                isPinned: notes.get(widget.noteID).isPinned,
+                                color: notes.get(widget.noteID).color));
                       }
                     },
                     style: const TextStyle(

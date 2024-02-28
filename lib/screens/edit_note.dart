@@ -65,7 +65,8 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
                           title: notes.get(widget.noteID).title,
                           description: notes.get(widget.noteID).description,
                           creationTime: notes.get(widget.noteID).creationTime,
-                          isPinned: !notes.get(widget.noteID).isPinned));
+                          isPinned: !notes.get(widget.noteID).isPinned,
+                          color: notes.get(widget.noteID).color));
                 });
               },
               icon: notes.get(widget.noteID).isPinned == true
@@ -95,7 +96,8 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
                             title: value,
                             description: notes.get(widget.noteID).description,
                             creationTime: notes.get(widget.noteID).creationTime,
-                            isPinned: notes.get(widget.noteID).isPinned));
+                            isPinned: notes.get(widget.noteID).isPinned,
+                            color: notes.get(widget.noteID).color));
                   },
                   controller: TextEditingController()
                     ..text = notes.get(widget.noteID).title,
@@ -128,7 +130,8 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
                               description: value,
                               creationTime:
                                   notes.get(widget.noteID).creationTime,
-                              isPinned: notes.get(widget.noteID).isPinned));
+                              isPinned: notes.get(widget.noteID).isPinned,
+                              color: notes.get(widget.noteID).color));
                     },
                     style: const TextStyle(
                       fontFamily: "Poppins",

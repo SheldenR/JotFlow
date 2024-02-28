@@ -9,7 +9,8 @@ class NotesModel {
       {required this.title,
       required this.description,
       required this.creationTime,
-      required this.isPinned});
+      required this.isPinned,
+      required this.color});
 
   @HiveField(0)
   String title;
@@ -23,8 +24,6 @@ class NotesModel {
   @HiveField(3)
   bool isPinned;
 
-  /*
   @HiveField(4)
   int color; // 0: default, 1: yellow, 2: blue, 3: orange, 4: green
-  */
 }

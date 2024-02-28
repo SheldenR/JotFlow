@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jotflow/main.dart';
+import 'package:jotflow/util/modal_sheet.dart';
 import '../screens/edit_note.dart';
 import 'pinned.dart';
 
@@ -12,13 +13,43 @@ class NoteCard extends StatefulWidget {
 }
 
 class _NoteCardState extends State<NoteCard> {
+  Future<void> showModal(int id) async {
+    await showModalBottomSheet(
+        barrierColor: Colors.black.withOpacity(0.2),
+        showDragHandle: true,
+        backgroundColor: Colors.white,
+        context: context,
+        builder: (BuildContext context) {
+          return NoteModalSheet(noteID: id);
+        });
+  }
+
+  String formattedDescription() {
+    if (notes.get(widget.noteID).description.length > 150) {
+      return notes.get(widget.noteID).description.substring(1, 150);
+    } else {
+      return notes.get(widget.noteID).description;
+    }
+  }
+
+  List<int> colorCycle = [
+    0x00FFFFFF,
+    0xFFFFE054,
+    0xFF4AB3FF,
+    0xFFFFA869,
+    0xFF1CE0A5
+  ];
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
         child: Container(
             padding: const EdgeInsets.only(bottom: 16),
             decoration: BoxDecoration(
-                border: Border.all(color: const Color(0xFFD4D4D4)),
+                color: Color(colorCycle[notes.get(widget.noteID).color]),
+                border: notes.get(widget.noteID).color == 0
+                    ? Border.all(color: const Color(0xFFD4D4D4))
+                    : Border.all(color: const Color(0x00FFFFFF)),
                 borderRadius: BorderRadius.circular(14)),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -35,7 +66,7 @@ class _NoteCardState extends State<NoteCard> {
                             color: Color(0xB2303030)))),
                 Padding(
                     padding: const EdgeInsets.only(left: 16, right: 16),
-                    child: Text(notes.get(widget.noteID).description,
+                    child: Text(formattedDescription(),
                         style: const TextStyle(
                             fontFamily: "Poppins",
                             fontSize: 14.5,
@@ -53,15 +84,7 @@ class _NoteCardState extends State<NoteCard> {
               ));
         },
         onLongPress: () {
-          showModalBottomSheet(
-              context: context,
-              builder: (BuildContext context) {
-                return const SizedBox(
-                    height: 300,
-                    child: Center(
-                      child: Text("test"),
-                    ));
-              });
+          showModal(widget.noteID);
         });
   }
 }
