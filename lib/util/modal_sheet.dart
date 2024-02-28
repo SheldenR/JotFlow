@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/notes_model.dart';
+import '../screens/home_screen.dart';
+import '../screens/edit_note.dart';
 import '../main.dart';
 
 class NoteModalSheet extends StatefulWidget {
@@ -13,7 +15,17 @@ class NoteModalSheet extends StatefulWidget {
 class _NoteModalSheetState extends State<NoteModalSheet> {
   @override
   Widget build(BuildContext context) {
-    int selectedColor = notes.get(widget.noteID).color + 1;
+    int selectedColor = (notes.get(widget.noteID) != null)
+        ? notes.get(widget.noteID).color + 1
+        : 1;
+
+    int createID() {
+      if (notes.length == 0) {
+        return 0;
+      } else {
+        return notes.keys.last + 1;
+      }
+    }
 
     return Padding(
         padding: const EdgeInsets.only(left: 30, right: 30),
@@ -181,39 +193,79 @@ class _NoteModalSheetState extends State<NoteModalSheet> {
                             },
                           ))
                     ])),
-                const Row(children: [
-                  Icon(Icons.delete_outlined, size: 30),
-                  Text("Delete Note",
-                      style: TextStyle(
-                        fontFamily: "Poppins",
-                        fontWeight: FontWeight.w400,
-                        fontSize: 22,
-                        color: Color(0xFF303030),
-                      ))
+                Row(children: [
+                  const Padding(
+                      padding: EdgeInsets.only(right: 0),
+                      child: Icon(Icons.delete_outlined, size: 30)),
+                  TextButton(
+                      child: const Text("Delete Note",
+                          style: TextStyle(
+                            fontFamily: "Poppins",
+                            fontWeight: FontWeight.w400,
+                            fontSize: 22,
+                            color: Color(0xFF303030),
+                          )),
+                      onPressed: () {
+                        notes.delete(widget.noteID);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const HomeScreen()),
+                        );
+                      })
                 ]),
-                const Padding(
-                    padding: EdgeInsets.only(top: 15),
+                Padding(
+                    padding: const EdgeInsets.only(top: 15),
                     child: Row(children: [
-                      Icon(Icons.content_copy_outlined, size: 30),
-                      Text("Duplicate Note",
-                          style: TextStyle(
-                            fontFamily: "Poppins",
-                            fontWeight: FontWeight.w400,
-                            fontSize: 22,
-                            color: Color(0xFF303030),
-                          ))
+                      const Padding(
+                          padding: EdgeInsets.only(right: 0),
+                          child: Icon(Icons.content_copy_outlined, size: 30)),
+                      TextButton(
+                        child: const Text("Duplicate Note",
+                            style: TextStyle(
+                              fontFamily: "Poppins",
+                              fontWeight: FontWeight.w400,
+                              fontSize: 22,
+                              color: Color(0xFF303030),
+                            )),
+                        onPressed: () {
+                          Navigator.popAndPushNamed(context, '/');
+                          notes.put(
+                              createID(),
+                              NotesModel(
+                                  title: notes.get(widget.noteID).title,
+                                  description:
+                                      notes.get(widget.noteID).description,
+                                  creationTime:
+                                      notes.get(widget.noteID).creationTime,
+                                  isPinned: notes.get(widget.noteID).isPinned,
+                                  color: notes.get(widget.noteID).color));
+                        },
+                      )
                     ])),
-                const Padding(
-                    padding: EdgeInsets.only(top: 15),
+                Padding(
+                    padding: const EdgeInsets.only(top: 15),
                     child: Row(children: [
-                      Icon(Icons.create_outlined, size: 30),
-                      Text("Edit Note",
-                          style: TextStyle(
-                            fontFamily: "Poppins",
-                            fontWeight: FontWeight.w400,
-                            fontSize: 22,
-                            color: Color(0xFF303030),
-                          ))
+                      const Padding(
+                          padding: EdgeInsets.only(right: 0),
+                          child: Icon(Icons.create_outlined, size: 30)),
+                      TextButton(
+                        child: const Text("Edit Note",
+                            style: TextStyle(
+                              fontFamily: "Poppins",
+                              fontWeight: FontWeight.w400,
+                              fontSize: 22,
+                              color: Color(0xFF303030),
+                            )),
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    EditNoteScreen(noteID: widget.noteID),
+                              ));
+                        },
+                      )
                     ])),
               ]),
             )));
