@@ -128,12 +128,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         style: TextButton.styleFrom(
                             foregroundColor: Colors.white,
                             backgroundColor: selectedButton == 1
-                                ? const Color(0xFFFFE054)
+                                ? const Color(0xFFF9CC31)
                                 : const Color(0x00000000),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30.0)),
                             side: const BorderSide(
-                                color: Color(0xFFFFE054), width: 2)),
+                                color: Color(0xFFF9CC31), width: 2)),
                         child: Text("All (${notes.length})",
                             style: TextStyle(
                               fontFamily: "Poppins",
@@ -157,12 +157,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         style: TextButton.styleFrom(
                             foregroundColor: Colors.white,
                             backgroundColor: selectedButton == 2
-                                ? const Color(0xFFFFE054)
+                                ? const Color(0xFFF9CC31)
                                 : const Color(0x00000000),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30.0)),
                             side: const BorderSide(
-                                color: Color(0xFFFFE054), width: 2)),
+                                color: Color(0xFFF9CC31), width: 2)),
                         child: Text("Pinned",
                             style: TextStyle(
                               fontFamily: "Poppins",
@@ -230,8 +230,8 @@ class _HomeScreenState extends State<HomeScreen> {
           ])),
       floatingActionButton: FloatingActionButton(
         shape: const CircleBorder(),
-        backgroundColor: const Color(0xFFFFE054),
-        splashColor: const Color(0xFFFFE054),
+        backgroundColor: const Color(0xFFF9CC31),
+        splashColor: const Color(0xFFF9CC31),
         onPressed: () {
           Navigator.push(
               context,
@@ -239,7 +239,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 builder: (context) => NewNoteScreen(noteID: createID()),
               ));
         },
-        child: const Icon(Icons.add, color: Color(0xFF303030), size: 28),
+        child: const Icon(Icons.add,
+            color: Color.fromARGB(255, 255, 255, 255), size: 28),
       ),
     );
   }
