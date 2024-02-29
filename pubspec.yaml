@@ -18,12 +18,10 @@ flutter_native_splash:
   web: false
   color: "#ffffff"
   image: "assets/splash_icon.png"
-  branding: "assets/branding.png"
 
   android_12:
     color: "#ffffff"
     image: "assets/splash_icon.png"
-    branding: "assets/branding.png"
 
 dev_dependencies:
   flutter_test:
