@@ -26,9 +26,9 @@ class _NoteCardState extends State<NoteCard> {
 
   String formattedDescription() {
     if (notes.get(widget.noteID).description.length > 150) {
-      return notes.get(widget.noteID).description.substring(1, 150);
+      return (notes.get(widget.noteID).description.substring(1, 150)).trim();
     } else {
-      return notes.get(widget.noteID).description;
+      return (notes.get(widget.noteID).description).trim();
     }
   }
 
@@ -70,7 +70,7 @@ class _NoteCardState extends State<NoteCard> {
                         style: const TextStyle(
                             fontFamily: "Poppins",
                             fontSize: 14.5,
-                            color: Color(0x99303030)))),
+                            color: Color.fromARGB(223, 48, 48, 48)))),
                 notes.get(widget.noteID).isPinned == true
                     ? const Pinned()
                     : const Center(),

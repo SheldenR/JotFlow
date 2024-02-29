@@ -19,13 +19,17 @@ class _HomeScreenState extends State<HomeScreen> {
 
   String getGreeting() {
     if (currentTime < 5) {
-      return "Sweet dreams...";
+      // 12:00AM to 4:59AM
+      return "I think it's about time to go to bed...";
     } else if (currentTime >= 5 && currentTime < 12) {
-      return "Good Morning...";
+      // 5:00AM to 11:59AM
+      return "Taking notes in the morning I see?";
     } else if (currentTime >= 12 && currentTime < 17) {
-      return "Good Afternoon...";
+      // 12:00PM to 4:59PM
+      return "Another productive afternoon!";
     } else {
-      return "Good Night...";
+      // 5:00PM to 11:59PM
+      return "Just one quick note before bed!";
     }
   }
 
@@ -69,6 +73,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double deviceHeight(BuildContext context) =>
+        MediaQuery.of(context).size.height;
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -205,17 +212,20 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
               ))
             else if (notes.length == 0)
-              const Padding(
-                  padding: EdgeInsets.only(left: 50, right: 50),
+              Padding(
+                  padding: EdgeInsets.only(
+                      left: deviceHeight(context) * 0.067,
+                      right: deviceHeight(context) * 0.067),
                   child: Column(
                     children: [
                       Padding(
-                          padding: EdgeInsets.only(top: 80, bottom: 25),
-                          child: Image(
+                          padding: EdgeInsets.only(
+                              top: deviceHeight(context) * 0.125, bottom: 25),
+                          child: const Image(
                             image: AssetImage('assets/no_notes.png'),
                             width: 150,
                           )),
-                      Text(
+                      const Text(
                         "It seems you don’t currently have any notes. Add to your JotFlow by creating a note using the plus button below.",
                         style: TextStyle(
                           fontSize: 20,
