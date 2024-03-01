@@ -195,7 +195,7 @@ class _NoteModalSheetState extends State<NoteModalSheet> {
                     ])),
                 Row(children: [
                   const Padding(
-                      padding: EdgeInsets.only(right: 0),
+                      padding: EdgeInsets.only(right: 0, top: 0),
                       child: Icon(Icons.delete_outlined, size: 30)),
                   TextButton(
                       child: const Text("Delete Note",
