@@ -26,7 +26,8 @@ class _NoteCardState extends State<NoteCard> {
 
   String formattedDescription() {
     if (notes.get(widget.noteID).description.length > 150) {
-      return (notes.get(widget.noteID).description.substring(1, 150)).trim();
+      return (notes.get(widget.noteID).description.substring(0, 130)).trim() +
+          "...";
     } else {
       return (notes.get(widget.noteID).description).trim();
     }
@@ -34,10 +35,10 @@ class _NoteCardState extends State<NoteCard> {
 
   List<int> colorCycle = [
     0x00FFFFFF,
-    0xFFFFE054,
-    0xFF4AB3FF,
-    0xFFFFA869,
-    0xFF1CE0A5
+    0x64FFE054,
+    0x644AB3FF,
+    0x64FFA869,
+    0x641CE0A5
   ];
 
   @override

@@ -14,13 +14,30 @@ class EditNoteScreen extends StatefulWidget {
 class _EditNoteScreenState extends State<EditNoteScreen> {
   late String title = "";
   late String description = "";
+  List<int> colorCycle = [
+    0x00FFFFFF,
+    0x64FFE054,
+    0x644AB3FF,
+    0x64FFA869,
+    0x641CE0A5
+  ];
+  List<int> alphaColorCycle = [
+    0xFFFFFFFF,
+    0xFFfef5d6,
+    0xFFdbf0ff,
+    0xFFffeee1,
+    0xFFd2f9ed
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: (notes.get(widget.noteID) == null)
+          ? Colors.white
+          : Color(alphaColorCycle[notes.get(widget.noteID).color]),
       appBar: AppBar(
           scrolledUnderElevation: 0,
-          backgroundColor: Colors.white,
+          backgroundColor: const Color(0x00FFFFFF),
           leading: IconButton(
               onPressed: () {
                 Navigator.push(
@@ -77,11 +94,10 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
       body: Padding(
           padding: const EdgeInsets.only(left: 18, right: 18),
           child: SingleChildScrollView(
-              child: Expanded(
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
                 TextField(
                   style: const TextStyle(
                     fontFamily: "Poppins",
@@ -153,7 +169,7 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
                           color: Color.fromARGB(85, 48, 48, 48),
                           height: 1.5,
                         ))),
-              ])))),
+              ]))),
     );
   }
 }

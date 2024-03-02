@@ -15,6 +15,16 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
   bool pinned = false;
   late String title = "";
   late String description = "";
+  late String noteCreationDate =
+      "${(DateTime.now().day).toString()} ${monthParse(DateTime.now().month)} ${(DateTime.now().year).toString()}, ${timeParse(DateTime.now().hour, DateTime.now().minute)}";
+
+  List<int> alphaColorCycle = [
+    0xFFFFFFFF,
+    0xFFfef5d6,
+    0xFFdbf0ff,
+    0xFFffeee1,
+    0xFFd2f9ed
+  ];
 
   String monthParse(int month) {
     var monthList = [
@@ -49,15 +59,14 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
     return "$hour:$minuteString$amPM";
   }
 
-  late String noteCreationDate =
-      "${(DateTime.now().day).toString()} ${monthParse(DateTime.now().month)} ${(DateTime.now().year).toString()}, ${timeParse(DateTime.now().hour, DateTime.now().minute)}";
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
           scrolledUnderElevation: 0,
-          backgroundColor: Colors.white,
+          backgroundColor: (notes.get(widget.noteID) == null)
+              ? Colors.white
+              : Color(alphaColorCycle[notes.get(widget.noteID).color]),
           leading: IconButton(
               onPressed: () {
                 Navigator.push(
@@ -102,11 +111,10 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
       body: Padding(
           padding: const EdgeInsets.only(left: 18, right: 18),
           child: SingleChildScrollView(
-              child: Expanded(
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
                 TextField(
                   style: const TextStyle(
                     fontFamily: "Poppins",
@@ -201,7 +209,7 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
                           color: Color.fromARGB(85, 48, 48, 48),
                           height: 1.5,
                         ))),
-              ])))),
+              ]))),
     );
   }
 }
