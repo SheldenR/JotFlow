@@ -1,4 +1,4 @@
-package com.example.jotflow
+package com.app.jotflow
 
 import io.flutter.embedding.android.FlutterActivity
 
