@@ -61,120 +61,43 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-          scrolledUnderElevation: 0,
-          backgroundColor: (notes.get(widget.noteID) == null)
-              ? Colors.white
-              : Color(alphaColorCycle[notes.get(widget.noteID).color]),
-          leading: IconButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const HomeScreen()),
-                );
-              },
-              icon: const Icon(Icons.arrow_back)),
-          actions: [
-            IconButton(
-              onPressed: () {
-                setState(() {
-                  pinned = !pinned;
-                  if (notes.get(widget.noteID) == null) {
-                    // Key doesnt exist
-                    notes.put(
-                        widget.noteID, // ID
-                        NotesModel(
-                            title: "No Title",
-                            description: "No note contents",
-                            creationTime: noteCreationDate,
-                            isPinned: pinned,
-                            color: 0));
-                  } else {
-                    // If key already exists
-                    notes.put(
-                        widget.noteID, // ID
-                        NotesModel(
-                            title: notes.get(widget.noteID).title,
-                            description: notes.get(widget.noteID).description,
-                            creationTime: notes.get(widget.noteID).creationTime,
-                            isPinned: pinned,
-                            color: notes.get(widget.noteID).color));
-                  }
-                });
-              },
-              icon: pinned == true
-                  ? const Icon(Icons.push_pin)
-                  : const Icon(Icons.push_pin_outlined),
-            )
-          ]),
-      body: Padding(
-          padding: const EdgeInsets.only(left: 18, right: 18),
-          child: SingleChildScrollView(
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                TextField(
-                  style: const TextStyle(
-                    fontFamily: "Poppins",
-                    fontWeight: FontWeight.w700,
-                    fontSize: 30,
-                    color: Color(0xFF303030),
-                  ),
-                  onChanged: (String value) async {
-                    if (notes.get(widget.noteID) == null) {
-                      // Key doesnt exist
-                      notes.put(
-                          widget.noteID, // ID
-                          NotesModel(
-                              title: value,
-                              description: "No note contents",
-                              creationTime: noteCreationDate,
-                              isPinned: pinned,
-                              color: 0));
-                    } else {
-                      // If key already exists
-                      notes.put(
-                          widget.noteID, // ID
-                          NotesModel(
-                              title: value,
-                              description: notes.get(widget.noteID).description,
-                              creationTime:
-                                  notes.get(widget.noteID).creationTime,
-                              isPinned: notes.get(widget.noteID).isPinned,
-                              color: notes.get(widget.noteID).color));
-                    }
+    return PopScope(
+        canPop: false,
+        onPopInvoked: (bool wasPopped) {
+          if (!wasPopped) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const HomeScreen()),
+            );
+          }
+        },
+        child: Scaffold(
+          appBar: AppBar(
+              scrolledUnderElevation: 0,
+              backgroundColor: (notes.get(widget.noteID) == null)
+                  ? Colors.white
+                  : Color(alphaColorCycle[notes.get(widget.noteID).color]),
+              leading: IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const HomeScreen()),
+                    );
                   },
-                  decoration: const InputDecoration(
-                      border: InputBorder.none,
-                      contentPadding: EdgeInsets.only(bottom: -5),
-                      hintText: "Title",
-                      hintStyle: TextStyle(
-                        fontFamily: "Poppins",
-                        fontWeight: FontWeight.w700,
-                        fontSize: 30,
-                        color: Color.fromARGB(83, 48, 48, 48),
-                      )),
-                ),
-                Text(noteCreationDate,
-                    style: const TextStyle(
-                      fontFamily: "Poppins",
-                      fontWeight: FontWeight.w300,
-                      fontSize: 16,
-                      color: Color(0xFF303030),
-                    )),
-                TextField(
-                    keyboardType: TextInputType.multiline,
-                    maxLines: null,
-                    onChanged: (String value) async {
+                  icon: const Icon(Icons.arrow_back)),
+              actions: [
+                IconButton(
+                  onPressed: () {
+                    setState(() {
+                      pinned = !pinned;
                       if (notes.get(widget.noteID) == null) {
                         // Key doesnt exist
                         notes.put(
                             widget.noteID, // ID
                             NotesModel(
                                 title: "No Title",
-                                description: value,
+                                description: "No note contents",
                                 creationTime: noteCreationDate,
                                 isPinned: pinned,
                                 color: 0));
@@ -184,32 +107,124 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
                             widget.noteID, // ID
                             NotesModel(
                                 title: notes.get(widget.noteID).title,
-                                description: value,
+                                description:
+                                    notes.get(widget.noteID).description,
                                 creationTime:
                                     notes.get(widget.noteID).creationTime,
-                                isPinned: notes.get(widget.noteID).isPinned,
+                                isPinned: pinned,
                                 color: notes.get(widget.noteID).color));
                       }
-                    },
-                    style: const TextStyle(
-                      fontFamily: "Poppins",
-                      fontWeight: FontWeight.w400,
-                      fontSize: 21,
-                      color: Color.fromARGB(255, 48, 48, 48),
-                      height: 1.5,
+                    });
+                  },
+                  icon: pinned == true
+                      ? const Icon(Icons.push_pin)
+                      : const Icon(Icons.push_pin_outlined),
+                )
+              ]),
+          body: Padding(
+              padding: const EdgeInsets.only(left: 18, right: 18),
+              child: SingleChildScrollView(
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                    TextField(
+                      style: const TextStyle(
+                        fontFamily: "Poppins",
+                        fontWeight: FontWeight.w700,
+                        fontSize: 30,
+                        color: Color(0xFF303030),
+                      ),
+                      onChanged: (String value) async {
+                        if (notes.get(widget.noteID) == null) {
+                          // Key doesnt exist
+                          notes.put(
+                              widget.noteID, // ID
+                              NotesModel(
+                                  title: value,
+                                  description: "No note contents",
+                                  creationTime: noteCreationDate,
+                                  isPinned: pinned,
+                                  color: 0));
+                        } else {
+                          // If key already exists
+                          notes.put(
+                              widget.noteID, // ID
+                              NotesModel(
+                                  title: value,
+                                  description:
+                                      notes.get(widget.noteID).description,
+                                  creationTime:
+                                      notes.get(widget.noteID).creationTime,
+                                  isPinned: notes.get(widget.noteID).isPinned,
+                                  color: notes.get(widget.noteID).color));
+                        }
+                      },
+                      decoration: const InputDecoration(
+                          border: InputBorder.none,
+                          contentPadding: EdgeInsets.only(bottom: -5),
+                          hintText: "Title",
+                          hintStyle: TextStyle(
+                            fontFamily: "Poppins",
+                            fontWeight: FontWeight.w700,
+                            fontSize: 30,
+                            color: Color.fromARGB(83, 48, 48, 48),
+                          )),
                     ),
-                    decoration: const InputDecoration(
-                        hintText: "Enter note contents...",
-                        border: InputBorder.none,
-                        contentPadding: EdgeInsets.only(top: 20, bottom: 150),
-                        hintStyle: TextStyle(
+                    Text(noteCreationDate,
+                        style: const TextStyle(
+                          fontFamily: "Poppins",
+                          fontWeight: FontWeight.w300,
+                          fontSize: 16,
+                          color: Color(0xFF303030),
+                        )),
+                    TextField(
+                        keyboardType: TextInputType.multiline,
+                        maxLines: null,
+                        onChanged: (String value) async {
+                          if (notes.get(widget.noteID) == null) {
+                            // Key doesnt exist
+                            notes.put(
+                                widget.noteID, // ID
+                                NotesModel(
+                                    title: "No Title",
+                                    description: value,
+                                    creationTime: noteCreationDate,
+                                    isPinned: pinned,
+                                    color: 0));
+                          } else {
+                            // If key already exists
+                            notes.put(
+                                widget.noteID, // ID
+                                NotesModel(
+                                    title: notes.get(widget.noteID).title,
+                                    description: value,
+                                    creationTime:
+                                        notes.get(widget.noteID).creationTime,
+                                    isPinned: notes.get(widget.noteID).isPinned,
+                                    color: notes.get(widget.noteID).color));
+                          }
+                        },
+                        style: const TextStyle(
                           fontFamily: "Poppins",
                           fontWeight: FontWeight.w400,
                           fontSize: 21,
-                          color: Color.fromARGB(85, 48, 48, 48),
+                          color: Color.fromARGB(255, 48, 48, 48),
                           height: 1.5,
-                        ))),
-              ]))),
-    );
+                        ),
+                        decoration: const InputDecoration(
+                            hintText: "Enter note contents...",
+                            border: InputBorder.none,
+                            contentPadding:
+                                EdgeInsets.only(top: 20, bottom: 150),
+                            hintStyle: TextStyle(
+                              fontFamily: "Poppins",
+                              fontWeight: FontWeight.w400,
+                              fontSize: 21,
+                              color: Color.fromARGB(85, 48, 48, 48),
+                              height: 1.5,
+                            ))),
+                  ]))),
+        ));
   }
 }
